@@ -1,5 +1,8 @@
 """Classes for melon orders."""
 from random import randint
+from datetime import date
+from datetime import datetime
+
 
 class AbstractMelonOrder():
 
@@ -10,11 +13,19 @@ class AbstractMelonOrder():
         self.qty = qty
         self.shipped = False
         self.order_type = order_type
+        self.date = date.today()
+        self.weekday = datetime.weekday(self.date)
+        self.time = datetime.hour
 
     def get_base_price(self):
         """Get random int for base price"""
 
-        return randint(5, 9)
+        base_price = randint(5, 9)
+    
+        if 5 > self.weekday >= 0 and 8 <= datetime.hour <= 11:
+            base_price = base_price + 4
+
+        return base_price
 
     def get_total(self):
         """Calculate price, including tax."""
